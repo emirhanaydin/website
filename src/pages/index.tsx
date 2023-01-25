@@ -3,7 +3,6 @@ import * as React from "react";
 import { graphql, type HeadFC, type PageProps } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS } from "@contentful/rich-text-types";
-import Query = Queries.Query;
 
 const pageStyles = {
   padding: 96,
@@ -26,8 +25,9 @@ const options = {
   },
 };
 
-const IndexPage: React.FC<PageProps<Query>> = ({ data }) => {
-  const introText = data.contentfulIntro?.body ?? null;
+const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
+  console.log(data);
+  const introText = data.contentfulIntro?.body;
   const body =
     introText != null ? (
       renderRichText(introText as never, options)
@@ -41,7 +41,7 @@ const IndexPage: React.FC<PageProps<Query>> = ({ data }) => {
 export default IndexPage;
 
 export const pageQuery = graphql`
-  query {
+  query IndexPage {
     contentfulIntro {
       body {
         raw
